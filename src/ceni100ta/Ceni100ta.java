@@ -20,48 +20,62 @@ public class Ceni100ta {
     public static void main(String[] args) throws FileNotFoundException {
         // TODO code application logic here
    
-        File archivo = new File("src/ceni100ta/ceni100ta");
-        Scanner entrada = new Scanner(archivo);
-        int vueltas;
-        int fbaile2= 0, fbaileT=0, fbaile=0, ftarea=0, ftareat=0;
+    File archivo = new File("src/ceni100ta/datos");
+    Scanner entrada = new Scanner(archivo);
+    
+    int numBailes=0;
+    int segundosHastaBaile=0;
+    int segundosTareaHastaBaile=0;
+    int diasNumHasta=0, horasNumHasta=0, minutosNumHasta=0, segundosNumHasta=0;
+    int horasTarea, minutosTarea, segundosTarea;
+    int totalTiempoTareas=0;
+    String lineaArchivo="";
+    String diasHasta, horasHasta, minutosHasta, segundosHasta;
+    Scanner lineaTareas;
+    
+    
+    
+    numBailes=entrada.nextInt();
+    entrada.nextLine();
+    
+    for (int i=1; i<=numBailes; i++){
         
+        lineaArchivo=entrada.nextLine ();
         
+        diasHasta=lineaArchivo.substring (0,2);
+        diasNumHasta = Integer.parseInt (diasHasta);
+        horasHasta=lineaArchivo.substring (3,5);
+        horasNumHasta= Integer.parseInt(horasHasta);
+        minutosHasta=lineaArchivo.substring (6,8);
+        minutosNumHasta= Integer.parseInt(minutosHasta);
+        segundosHasta=lineaArchivo.substring (9,11);
+        segundosNumHasta=Integer.parseInt(segundosHasta);
+    
+        segundosHastaBaile= (diasNumHasta*24*60*60)
+                            +(horasNumHasta*60*60)
+                            +(minutosNumHasta*60)
+                            +segundosNumHasta;
         
-        vueltas=entrada.nextInt ();
-        entrada.nextLine();
-        for (int i=0; i<vueltas; i++) {
-        entrada.useDelimiter(":");
-           //linea 1
-            fbaile=entrada.nextInt();
-            fbaile=fbaile*24;
-            fbaileT=fbaile;
-                for (int e=0; e<=3; e++){
-                    
-                    entrada.useDelimiter(":");
-                    fbaile2=entrada.nextInt();
-                        if (fbaile2<=00){
-                            continue;
-                        }   
-                       
-                    fbaile2=fbaile2*60;
-                    fbaileT=fbaile2+fbaileT;
-                    fbaile2=0;
-                        
-                }
-             //linea 2
-           entrada.nextLine();
-            
-                for (int a=0; a<3; a++) {
-                    
-                    ftarea=entrada.nextInt();
-                    
-                    ftarea=ftarea*60;
-                    ftareat=ftarea+ftareat;
-                }
-         
-                
-                
-         }//fin for grande
+        lineaArchivo=entrada.nextLine();
+        lineaTareas=new Scanner(lineaArchivo);
+        lineaTareas.useDelimiter("[:\\s]");
+        
+        while (lineaTareas.hasNext()){
+            horasTarea=lineaTareas.nextInt();
+            minutosTarea=lineaTareas.nextInt();
+            segundosTarea=lineaTareas.nextInt();
+            totalTiempoTareas=totalTiempoTareas+
+                    (horasTarea*60*60)+
+                    (minutosTarea*60)+
+                    segundosTarea;
+        }
+       if (segundosHastaBaile > totalTiempoTareas){
+           System.out.println ("Cenicienta puede ir al baile :)");
+       }
+       else {
+           System.out.println ("Cenicienta no puede ir al baile :( ");
+       }
+    }
     }//fin1
 }//fin2
     
